@@ -117,114 +117,78 @@
             from { opacity: 0; transform: translateY(25px); }
             to { opacity: 1; transform: translateY(0); }
         }
-        /* ===== Epic Welcome Modal Styles ===== */
-        .welcome-modal-overlay {
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background-color: rgba(1, 4, 9, 0.8);
-            backdrop-filter: blur(8px);
-            -webkit-backdrop-filter: blur(8px);
-            z-index: 200;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            opacity: 0;
-            transition: opacity 0.4s ease;
-            padding: 1rem;
-        }
-        .welcome-modal-overlay:not(.hidden) {
-            opacity: 1;
-        }
-        .welcome-modal-content {
-            background: linear-gradient(145deg, var(--card-bg-color), #010409);
-            border: 1px solid var(--border-color);
-            border-radius: 16px;
-            padding: 30px 40px;
-            width: 100%;
-            max-width: 500px;
-            text-align: center;
-            position: relative;
-            box-shadow: 0 0 50px rgba(47, 129, 247, 0.2), 0 0 0 1px rgba(47, 129, 247, 0.2);
-            transform: scale(0.9) translateY(20px);
-            opacity: 0;
-            transition: transform 0.4s cubic-bezier(0.23, 1, 0.32, 1), opacity 0.4s ease;
-        }
-        .welcome-modal-overlay:not(.hidden) .welcome-modal-content {
-            transform: scale(1) translateY(0);
-            opacity: 1;
-        }
-        .welcome-modal-close {
-            position: absolute;
-            top: 10px;
-            left: 15px;
-            background: none;
-            border: none;
-            color: var(--text-secondary-color);
-            font-size: 30px;
-            cursor: pointer;
-            transition: color 0.2s ease, transform 0.2s ease;
-            line-height: 1;
-        }
-        .welcome-modal-close:hover {
-            color: var(--text-color);
-            transform: rotate(90deg);
-        }
-        .welcome-modal-icon {
-            width: 70px;
-            height: 70px;
-            margin: 0 auto 20px;
-            border-radius: 50%;
-            background: radial-gradient(circle, rgba(47, 129, 247, 0.2) 0%, rgba(47, 129, 247, 0) 70%);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-        }
-        .welcome-modal-icon i {
-            font-size: 36px;
-            color: var(--accent-color);
-            text-shadow: 0 0 15px var(--glow-color);
-        }
-        .welcome-modal-title {
-            font-size: 26px;
-            font-weight: 800;
-            color: var(--text-color);
-            margin-bottom: 12px;
-        }
-        .welcome-modal-text {
-            font-size: 16px;
-            color: var(--text-secondary-color);
+        /* ===== Warning Banner Styles ===== */
+        .warning-banner {
+            background: linear-gradient(135deg, #1a1c23, #242731);
+            border: 1px solid #30363d;
+            border-radius: 12px;
+            padding: 16px;
             margin-bottom: 24px;
-            max-width: 350px;
-            margin-left: auto;
-            margin-right: auto;
+            display: none;
+            animation: fadeInUp 0.5s ease-out;
         }
-        .welcome-modal-link {
-            display: inline-block;
-            background: var(--accent-color);
-            color: #fff;
-            padding: 12px 24px;
+        .warning-banner.show {
+            display: block;
+        }
+        .warning-banner-content {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+        }
+        .warning-icon {
+            font-size: 28px;
+            color: #f59e0b;
+            flex-shrink: 0;
+        }
+        .warning-text {
+            flex: 1;
+            color: #e6edf3;
+            font-size: 16px;
+            line-height: 1.5;
+        }
+        .warning-text strong {
+            color: #fbbf24;
+        }
+        .warning-actions {
+            display: flex;
+            gap: 12px;
+            flex-shrink: 0;
+        }
+        .warning-btn {
+            background: rgba(255, 255, 255, 0.1);
+            color: #e6edf3;
+            border: 1px solid rgba(255, 255, 255, 0.2);
             border-radius: 8px;
-            font-weight: 600;
-            text-decoration: none;
+            padding: 8px 16px;
+            font-size: 14px;
+            font-weight: 500;
+            cursor: pointer;
             transition: all 0.2s ease;
         }
-        .welcome-modal-link:hover {
-            background: #1f6feb;
-            box-shadow: 0 0 20px rgba(47, 129, 247, 0.6);
-            transform: translateY(-2px);
+        .warning-btn:hover {
+            background: rgba(255, 255, 255, 0.2);
+            border-color: #f59e0b;
         }
-        .hidden {
-            display: none !important;
+        .warning-btn-primary {
+            background: #f59e0b;
+            border-color: #f59e0b;
+            color: #010409;
+            font-weight: 600;
+        }
+        .warning-btn-primary:hover {
+            background: #e6940b;
+            box-shadow: 0 0 15px rgba(245, 158, 11, 0.3);
         }
         @media (max-width: 768px) { 
-            .proxy-grid { 
-                grid-template-columns: 1fr; 
+            .warning-banner-content {
+                flex-direction: column;
+                text-align: center;
             }
-            .welcome-modal-content {
-                padding: 20px;
+            .warning-actions {
+                width: 100%;
+            }
+            .warning-btn {
+                flex: 1;
             }
         }
         ::-webkit-scrollbar { width: 8px; }
@@ -233,45 +197,18 @@
     </style>
 </head>
 <body class="min-h-screen">
-    <!-- ===== Welcome Modal (Epic Intro) ===== -->
-    <div id="welcomeModal" class="welcome-modal-overlay hidden">
-        <div class="welcome-modal-content">
-            <button id="closeWelcomeModal" class="welcome-modal-close" aria-label="بستن">
-                ×
-            </button>
-            <div class="welcome-modal-icon">
-                <i class="fa-solid fa-rocket"></i>
-            </div>
-            <h2 class="welcome-modal-title">به پروکسی‌یاب تلگرام خوش آمدید!</h2>
-            <p class="welcome-modal-text">
-                آخرین پروکسی‌های MTProto را بی‌درنگ تست و اتصال برقرار کنید.
-                امن، پرسرعت و کاملاً رایگان.
-            </p>
-            <a href="https://t.me/davaji" target="_blank" rel="noopener noreferrer" class="welcome-modal-link">
-                <i class="fa-solid fa-telegram mr-2"></i> همراه ما باشید
-            </a>
-        </div>
-    </div>
-
-    <!-- ===== Test Warning Modal ===== -->
-    <div id="testWarningModal" class="welcome-modal-overlay hidden">
-        <div class="welcome-modal-content" style="max-width: 550px;">
-            <button id="closeTestWarningModal" class="welcome-modal-close" aria-label="بستن">
-                ×
-            </button>
-            <div class="welcome-modal-icon">
+    <!-- ===== Warning Banner ===== -->
+    <div id="filterWarningBanner" class="warning-banner">
+        <div class="warning-banner-content">
+            <div class="warning-icon">
                 <i class="fa-solid fa-shield-alt"></i>
             </div>
-            <h2 class="welcome-modal-title">هشدار تست پروکسی</h2>
-            <p class="welcome-modal-text">
-                برای دریافت بهترین نتایج تست، لطفاً قبل از شروع تست، تمام فیلترشکن‌ها را غیرفعال کنید.
-                تست پروکسی‌ها با فیلترشکن فعال ممکن است نتایج نادرستی ارائه دهد.
-            </p>
-            <div class="flex gap-3 justify-center">
-                <button id="cancelTestBtn" class="btn px-6 py-3 text-base">لغو</button>
-                <button id="confirmTestBtn" class="btn btn-primary px-6 py-3 text-base font-semibold">
-                    <i class="fa-solid fa-check mr-2"></i> ادامه با فیلترشکن
-                </button>
+            <div class="warning-text">
+                شما با استفاده از <strong>فیلترشکن</strong> به این صفحه وارد شده‌اید. برای دریافت بهترین نتایج تست، توصیه می‌شود قبل از تست پروکسی‌ها، فیلترشکن را <strong>غیرفعال کنید</strong>.
+            </div>
+            <div class="warning-actions">
+                <button id="dismissWarningBtn" class="warning-btn">متوجه شدم</button>
+                <button id="testAnywayBtn" class="warning-btn warning-btn-primary">تست را انجام بده</button>
             </div>
         </div>
     </div>
@@ -377,8 +314,8 @@
             </div>
             <div class="mt-8 pt-6 border-t border-gray-800/50 text-sm">
                 <p class="flex items-center justify-center gap-x-2 flex-wrap">
-                    <span>&copy; 1403 پروکسی یاب تلگرام. تمامی حقوق محفوظ است.</span>
-                    <span class="bg-sky-500/10 text-sky-400 text-xs font-semibold px-2.5 py-0.5 rounded-full border border-sky-500/20">نسخه 1.4</span>
+                    <span>&copy; 1404 پروکسی یاب تلگرام. تمامی حقوق محفوظ است.</span>
+                    <span class="bg-sky-500/10 text-sky-400 text-xs font-semibold px-2.5 py-0.5 rounded-full border border-sky-500/20">نسخه 1.5</span>
                 </p>
             </div>
         </div>
@@ -397,6 +334,100 @@
             });
         }, { passive: true });
 
+        // Check if user is using a proxy/VPN based on network conditions
+        const checkProxyUsage = async () => {
+            try {
+                // Method 1: Check for common proxy/VPN indicators
+                const hasProxyHeaders = () => {
+                    const headers = ['cf-connecting-ip', 'x-forwarded-for', 'via', 'proxy-connection'];
+                    let found = false;
+                    try {
+                        // This will fail if we can't make a fetch request, indicating possible proxy
+                        const controller = new AbortController();
+                        const timeoutId = setTimeout(() => controller.abort(), 3000);
+                        
+                        fetch('/', { 
+                            method: 'HEAD', 
+                            signal: controller.signal,
+                            mode: 'no-cors'
+                        }).finally(() => clearTimeout(timeoutId));
+                        
+                    } catch (e) {
+                        found = true;
+                    }
+                    return found;
+                };
+
+                // Method 2: Check WebRTC for local IP (if available)
+                const getWebRTCInfo = () => {
+                    return new Promise((resolve) => {
+                        const pc = new RTCPeerConnection({iceServers: []});
+                        pc.createDataChannel('');
+                        pc.createOffer().then(offer => pc.setLocalDescription(offer)).catch(() => {});
+                        
+                        pc.onicecandidate = (ice) => {
+                            if (!ice || !ice.candidate || !ice.candidate.candidate) return;
+                            const hasVPN = ice.candidate.candidate.indexOf('relay') !== -1;
+                            pc.close();
+                            resolve(hasVPN);
+                        };
+                        
+                        setTimeout(() => {
+                            pc.close();
+                            resolve(false);
+                        }, 1000);
+                    });
+                };
+
+                // Method 3: Check timezone and language settings
+                const suspiciousIndicators = () => {
+                    const timezone = Intl.DateTimeFormat().resolvedOptions().timeZone;
+                    const language = navigator.language;
+                    const userAgent = navigator.userAgent;
+                    
+                    // Check for common VPN timezones
+                    const vpnTimezones = ['Etc/UTC', 'America/New_York', 'Europe/London'];
+                    const isSuspiciousTimezone = vpnTimezones.includes(timezone);
+                    
+                    // Check for common VPN user agents
+                    const isSuspiciousUA = userAgent.includes('VPN') || userAgent.includes('Tor');
+                    
+                    return isSuspiciousTimezone || isSuspiciousUA;
+                };
+
+                // Combine multiple detection methods
+                const [webrtcResult] = await Promise.all([
+                    getWebRTCInfo().catch(() => false)
+                ]);
+                
+                const hasProxy = hasProxyHeaders();
+                const hasSuspiciousIndicators = suspiciousIndicators();
+                
+                // If any detection method indicates proxy usage, show warning
+                return hasProxy || webrtcResult || hasSuspiciousIndicators;
+                
+            } catch (error) {
+                // If any error occurs during detection, assume proxy might be in use
+                return true;
+            }
+        };
+
+        // Show warning banner if proxy is detected
+        const showFilterWarning = () => {
+            const banner = document.getElementById('filterWarningBanner');
+            if (banner) {
+                banner.classList.add('show');
+            }
+        };
+
+        // Hide warning banner
+        const hideFilterWarning = () => {
+            const banner = document.getElementById('filterWarningBanner');
+            if (banner) {
+                banner.classList.remove('show');
+            }
+        };
+
         // Main application logic
         let allProxies = [];
         let visibleProxies = [];
@@ -413,6 +444,9 @@
             noResults: document.getElementById('noResults'),
             loadMoreContainer: document.getElementById('loadMoreContainer'),
             loadMoreBtn: document.getElementById('loadMoreBtn'),
+            filterWarningBanner: document.getElementById('filterWarningBanner'),
+            dismissWarningBtn: document.getElementById('dismissWarningBtn'),
+            testAnywayBtn: document.getElementById('testAnywayBtn')
         };
 
         const countryTranslations = {
@@ -549,12 +583,18 @@
         const testAllProxies = async () => {
             if (allProxies.length === 0) return;
             
-            // Show warning modal before testing
-            showTestWarningModal();
+            // Always show warning when testing, if user came through proxy
+            const isUsingProxy = await checkProxyUsage();
+            if (isUsingProxy) {
+                showFilterWarning();
+                return;
+            }
+            
+            startTestAll();
         };
 
         const startTestAll = () => {
-            hideTestWarningModal();
+            hideFilterWarning();
             elements.testAllBtn.disabled = true;
             elements.testAllBtn.innerHTML = '<div class="loading-spinner"></div>';
             
@@ -581,26 +621,6 @@
             };
             
             testNextProxy();
-        };
-
-        const showTestWarningModal = () => {
-            const modal = document.getElementById('testWarningModal');
-            if (modal) {
-                modal.classList.remove('hidden');
-            }
-        };
-
-        const hideTestWarningModal = () => {
-            const modal = document.getElementById('testWarningModal');
-            if (modal) {
-                modal.style.opacity = '0';
-                const content = modal.querySelector('.welcome-modal-content');
-                if (content) content.style.transform = 'scale(0.9)';
-                modal.addEventListener('transitionend', () => {
-                    modal.classList.add('hidden');
-                    modal.style.opacity = '1';
-                }, { once: true });
-            }
         };
 
         const copyProxy = (proxyId) => {
@@ -745,27 +765,15 @@
             });
         }
 
-        // ===== Test Warning Modal Logic =====
-        const testWarningModal = document.getElementById('testWarningModal');
-        const closeTestWarningModalBtn = document.getElementById('closeTestWarningModal');
-        const cancelTestBtn = document.getElementById('cancelTestBtn');
-        const confirmTestBtn = document.getElementById('confirmTestBtn');
-
-        if (closeTestWarningModalBtn) {
-            closeTestWarningModalBtn.addEventListener('click', hideTestWarningModal);
+        // Event listeners for warning banner
+        if (elements.dismissWarningBtn) {
+            elements.dismissWarningBtn.addEventListener('click', hideFilterWarning);
         }
 
-        if (cancelTestBtn) {
-            cancelTestBtn.addEventListener('click', hideTestWarningModal);
-        }
-
-        if (confirmTestBtn) {
-            confirmTestBtn.addEventListener('click', startTestAll);
-        }
-
-        if (testWarningModal) {
-            testWarningModal.addEventListener('click', (e) => {
-                if (e.target === testWarningModal) hideTestWarningModal();
+        if (elements.testAnywayBtn) {
+            elements.testAnywayBtn.addEventListener('click', () => {
+                hideFilterWarning();
+                startTestAll();
             });
         }
 
@@ -773,9 +781,15 @@
         elements.testAllBtn.addEventListener('click', testAllProxies);
         elements.loadMoreBtn.addEventListener('click', loadMoreProxies);
 
-        window.addEventListener('load', () => {
+        window.addEventListener('load', async () => {
             loadProxies();
             setTimeout(showWelcomeModal, 700);
+            
+            // Check if user is using proxy and show warning if needed
+            const isUsingProxy = await checkProxyUsage();
+            if (isUsingProxy) {
+                showFilterWarning();
+            }
         });
     </script>
 </body>
